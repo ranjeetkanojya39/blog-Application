@@ -1,0 +1,64 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+
+        <div class="col-md-5">
+            <div class="card p-4 shadow-sm">
+
+                <!-- Heading -->
+                <h3 class="text-center mb-4">Create Account</h3>
+
+                <!-- Form -->
+                <form method="post">
+                    {% csrf_token %}
+
+                    <!-- Name -->
+                    <div class="mb-3">
+                        <input type="text" 
+                               name="uname" 
+                               class="form-control" 
+                               placeholder="Enter Name" 
+                               required>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="mb-3">
+                        <input type="email" 
+                               name="uemail" 
+                               class="form-control" 
+                               placeholder="Enter Email" 
+                               required>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="mb-3">
+                        <input type="password" 
+                               name="upassword" 
+                               class="form-control" 
+                               placeholder="Enter Password" 
+                               required>
+                    </div>
+
+                    <!-- Button -->
+                    <button type="submit" 
+                            class="btn btn-primary w-100">
+                        Sign Up
+                    </button>
+
+                </form>
+
+                <!-- Login Link -->
+                <p class="text-center mt-3">
+                    Already have an account? 
+                    <a href="{% url 'login-page' %}">Login here</a>
+                </p>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

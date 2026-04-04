@@ -1,0 +1,75 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container custom-container">
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light w-100">
+
+        <a href="{% url 'home-page' %}">
+            <img class="w-25" src="{% static 'images/pho.png' %}" alt="logo">
+        </a>
+
+        <button class="navbar-toggler" type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            <ul class="navbar-nav me-auto"></ul>
+
+            <div class="dropdown">
+                <button class="btn btn-outline-primary dropdown-toggle"
+                    type="button" data-bs-toggle="dropdown">
+                    Profile
+                </button>
+
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{% url 'new-post' %}">New Post</a>
+                    <a class="dropdown-item" href="{% url 'my-post' %}">My Posts</a>
+                    <a class="dropdown-item" href="{% url 'logout' %}">Sign Out</a>
+                </div>
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- Form -->
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="container" style="max-width: 800px;">
+            <br><br>
+
+            <h1 class="fw-bold">Make a New Post</h1>
+            <hr>
+
+            <!-- Title -->
+            <div class="mb-3">
+                <label class="form-label"><b>Title</b></label>
+                <input type="text" class="form-control"
+                    name="title" required>
+            </div>
+
+            <!-- Content -->
+            <div class="mb-3">
+                <label class="form-label"><b>Content</b></label>
+                <textarea class="form-control"
+                    rows="6" name="content" required></textarea>
+            </div>
+
+            <!-- Button -->
+            <button class="btn btn-primary" type="submit">
+                Submit
+            </button>
+
+        </div>
+    </form>
+
+</div>
+
+{% endblock %}
