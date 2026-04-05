@@ -63,6 +63,17 @@
                     <!-- Content -->
                     <h3>{{ post.title }}</h3>
                     <p>{{ post.content }}</p>
+                    
+                <!-- ✅ DELETE BUTTON -->
+                {% if post.author == request.user %}
+                <form action="{% url 'delete-post' post.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger btn-sm"
+                        onclick="return confirm('Delete this post?')">
+                        Delete
+                    </button>
+                </form>
+                {% endif %}
 
                 </div>
             </article>

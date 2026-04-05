@@ -19,7 +19,6 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
             <ul class="navbar-nav me-auto"></ul>
 
             <div class="dropdown">
@@ -34,7 +33,6 @@
                     <a class="dropdown-item" href="{% url 'logout' %}">Sign Out</a>
                 </div>
             </div>
-
         </div>
     </nav>
 
@@ -46,24 +44,32 @@
         {% if posts %}
             {% for post in posts %}
 
-            <article class="media content-section">
-                <div class="media-body"
-                    style="border: 1px solid black; padding: 20px; margin-bottom: 15px;">
+            <div style="border: 1px solid black; padding: 20px; margin-bottom: 15px;">
 
-                    <!-- Author + Date -->
-                    <div class="d-flex justify-content-between">
-                        <h5 class="text-uppercase">{{ post.author.username }}</h5>
-                        <small>{{ post.date_posted|date:"F d, Y" }}</small>
-                    </div>
-
-                    <hr>
-
-                    <!-- Title + Content -->
-                    <h3>{{ post.title }}</h3>
-                    <p>{{ post.content }}</p>
-
+                <!-- Author + Date -->
+                <div class="d-flex justify-content-between">
+                    <h5 class="text-uppercase">{{ post.author.username }}</h5>
+                    <small>{{ post.date_posted|date:"F d, Y" }}</small>
                 </div>
-            </article>
+
+                <hr>
+
+                <!-- Title + Content -->
+                <h3>{{ post.title }}</h3>
+                <p>{{ post.content }}</p>
+
+                <!-- ✅ DELETE BUTTON -->
+                {% comment %} {% if post.author == request.user %}
+                <form action="{% url 'delete-post' post.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger btn-sm"
+                        onclick="return confirm('Delete this post?')">
+                        Delete
+                    </button>
+                </form>
+                {% endif %} {% endcomment %}
+
+            </div>
 
             {% endfor %}
         {% else %}

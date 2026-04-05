@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Posts
+from django.shortcuts import get_object_or_404
 
 
 # ✅ SIGNUP
@@ -16,7 +17,7 @@ def signup(request):
         # 🔒 Check if user already exists
         if User.objects.filter(username=name).exists():
             messages.error(request, "Username already exists")
-            return redirect('signup')
+            return redirect('signup-page')
 
         # 🔒 Create user
         User.objects.create_user(
@@ -88,3 +89,18 @@ def signout(request):
     logout(request)
     messages.success(request, "Logged out successfully")
     return redirect('login-page')
+
+
+
+@login_required(login_url='login-page')
+def delete_post(request, id):
+    post = get_object_or_404(Posts, id=id)
+
+    if post.author != request.user:
+        messages.error(request, "Not allowed")
+        return redirect('home-page')
+
+    if request.method == 'POST':
+        post.delete()
+        messages.success(request, "Deleted successfully")
+        return redirect('home-page')

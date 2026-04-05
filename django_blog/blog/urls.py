@@ -10,5 +10,6 @@ urlpatterns = [
     path('newpost/', views.newPost, name='new-post'),
     path('mypost/', views.myPosts, name='my-post'),   
     path('signout/', views.signout, name='logout'),
+     path('delete/<int:id>/', views.delete_post, name='delete-post'),
 ]
 
