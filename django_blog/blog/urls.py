@@ -10,6 +10,7 @@ urlpatterns = [
     path('newpost/', views.newPost, name='new-post'),
     path('mypost/', views.myPosts, name='my-post'),   
     path('signout/', views.signout, name='logout'),
-     path('delete/<int:id>/', views.delete_post, name='delete-post'),
+    path('delete/<int:id>/', views.delete_post, name='delete-post'),
+    path('edit-post/<int:id>/', views.edit_post, name='edit-post'),
 ]
 

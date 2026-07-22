@@ -3,13 +3,147 @@
 
 {% block content %}
 
+<style>
+    :root {
+        --primary: #4f46e5;
+        --primary-light: #eef2ff;
+        --text-dark: #1e293b;
+        --text-muted: #64748b;
+        --border: #e2e8f0;
+        --bg-soft: #f8fafc;
+    }
+
+    body {
+        background-color: var(--bg-soft);
+    }
+
+    /* Navbar */
+    .modern-navbar {
+        background: #fff !important;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+        border-radius: 12px;
+        padding: 12px 20px;
+        margin-bottom: 30px;
+    }
+
+    .modern-navbar img {
+        width: 130px !important;
+        object-fit: contain;
+    }
+
+    .profile-btn {
+        border-radius: 8px;
+        font-weight: 500;
+        border: 1px solid var(--primary);
+        color: var(--primary);
+        transition: all 0.2s ease;
+    }
+
+    .profile-btn:hover {
+        background: var(--primary);
+        color: #fff;
+    }
+
+    .dropdown-menu {
+        border: none;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        border-radius: 10px;
+        padding: 8px;
+    }
+
+    .dropdown-item {
+        border-radius: 6px;
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
+
+    .dropdown-item:hover {
+        background: var(--primary-light);
+        color: var(--primary);
+    }
+
+    /* Post Card */
+    .post-card {
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 24px 28px;
+        margin-bottom: 20px;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .post-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.07);
+    }
+
+    .post-meta {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 12px;
+    }
+
+    .author-avatar {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background: var(--primary);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+    }
+
+    .author-name {
+        font-weight: 600;
+        font-size: 0.95rem;
+        color: var(--text-dark);
+        margin: 0;
+    }
+
+    .post-date {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+    }
+
+    .post-title {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: var(--text-dark);
+        margin-bottom: 10px;
+    }
+
+    .post-content {
+        color: #475569;
+        line-height: 1.6;
+        margin-bottom: 14px;
+    }
+
+    .delete-btn {
+        border-radius: 8px;
+        font-size: 0.8rem;
+        padding: 5px 14px;
+        font-weight: 500;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        color: var(--text-muted);
+    }
+</style>
+
 <div class="container custom-container">
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light w-100">
+    <nav class="navbar navbar-expand-lg navbar-light modern-navbar">
 
         <a href="{% url 'home-page' %}">
-            <img class="w-25" src="{% static 'images/pho.png' %}" alt="logo">
+            <img src="{% static 'images/pho.png' %}" alt="logo">
         </a>
 
         <button class="navbar-toggler" type="button"
@@ -22,58 +156,62 @@
             <ul class="navbar-nav me-auto"></ul>
 
             <div class="dropdown">
-                <button class="btn btn-outline-primary dropdown-toggle"
+                <button class="btn profile-btn dropdown-toggle"
                     type="button" data-bs-toggle="dropdown">
                     Profile
                 </button>
 
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="{% url 'new-post' %}">New Post</a>
-                    <a class="dropdown-item" href="{% url 'my-post' %}">My Posts</a>
-                    <a class="dropdown-item" href="{% url 'logout' %}">Sign Out</a>
+                <div class="dropdown-menu dropdown-menu-end">
+                    <a class="dropdown-item" href="{% url 'new-post' %}">➕ New Post</a>
+                    <a class="dropdown-item" href="{% url 'my-post' %}">📄 My Posts</a>
+                    <a class="dropdown-item" href="{% url 'logout' %}">🚪 Sign Out</a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <br><br>
-
     <!-- Posts Section -->
-    <div class="container" style="max-width: 1350px;">
+    <div class="container" style="max-width: 900px;">
 
         {% if posts %}
             {% for post in posts %}
 
-            <div style="border: 1px solid black; padding: 20px; margin-bottom: 15px;">
+            <div class="post-card">
 
                 <!-- Author + Date -->
-                <div class="d-flex justify-content-between">
-                    <h5 class="text-uppercase">{{ post.author.username }}</h5>
-                    <small>{{ post.date_posted|date:"F d, Y" }}</small>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="post-meta">
+                        <div class="author-avatar">{{ post.author.username|slice:":1" }}</div>
+                        <div>
+                            <p class="author-name">{{ post.author.username }}</p>
+                            <span class="post-date">{{ post.date_posted|date:"F d, Y" }}</span>
+                        </div>
+                    </div>
                 </div>
 
-                <hr>
-
                 <!-- Title + Content -->
-                <h3>{{ post.title }}</h3>
-                <p>{{ post.content }}</p>
+                <h3 class="post-title mt-3">{{ post.title }}</h3>
+                <p class="post-content">{{ post.content }}</p>
 
-                <!-- ✅ DELETE BUTTON -->
-                {% comment %} {% if post.author == request.user %}
-                <form action="{% url 'delete-post' post.id %}" method="POST">
+                <!-- Delete Button -->
+                {% if post.author == request.user %}
+                <form action="{% url 'delete-post' post.id %}" method="POST" class="mb-0">
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-danger btn-sm"
+                    <button type="submit" class="btn btn-outline-danger delete-btn"
                         onclick="return confirm('Delete this post?')">
-                        Delete
+                        🗑 Delete
                     </button>
                 </form>
-                {% endif %} {% endcomment %}
+                {% endif %}
 
             </div>
 
             {% endfor %}
         {% else %}
-            <h3 class="text-center">No posts available</h3>
+            <div class="empty-state">
+                <h3>No posts available</h3>
+                <p>Be the first one to share something!</p>
+            </div>
         {% endif %}
 
     </div>

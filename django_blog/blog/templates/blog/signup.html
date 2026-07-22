@@ -1,63 +1,150 @@
 {% extends 'blog/base.html' %}
 {% block content %}
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
+<style>
+    .register-wrapper {
+        min-height: 75vh;
+        display: flex;
+        align-items: center;
+    }
 
-        <div class="col-md-5">
-            <div class="card p-4 shadow-sm">
+    .register-card {
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 40px 36px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    }
 
-                <!-- Heading -->
-                <h3 class="text-center mb-4">Create Account</h3>
+    .register-title {
+        font-weight: 700;
+        color: var(--text-dark);
+        font-size: 1.5rem;
+        margin-bottom: 4px;
+    }
 
-                <!-- Form -->
-                <form method="post">
-                    {% csrf_token %}
+    .register-subtitle {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        margin-bottom: 28px;
+    }
 
-                    <!-- Name -->
-                    <div class="mb-3">
-                        <input type="text" 
-                               name="uname" 
-                               class="form-control" 
-                               placeholder="Enter Name" 
-                               required>
+    .form-label-modern {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text-dark);
+        margin-bottom: 6px;
+    }
+
+    .input-modern {
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 11px 14px;
+        font-size: 0.95rem;
+        transition: all 0.2s ease;
+    }
+
+    .input-modern:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px var(--primary-light);
+    }
+
+    .btn-register {
+        background: var(--primary);
+        border: none;
+        color: #fff;
+        font-weight: 600;
+        border-radius: 10px;
+        padding: 11px;
+        font-size: 0.95rem;
+        transition: all 0.2s ease;
+    }
+
+    .btn-register:hover {
+        background: var(--primary-dark);
+        color: #fff;
+    }
+
+    .login-text {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+    }
+
+    .login-text a {
+        color: var(--primary);
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    .login-text a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<div class="register-wrapper">
+    <div class="container">
+        <div class="row justify-content-center">
+
+            <div class="col-md-5">
+                <div class="register-card">
+
+                    <div class="text-center">
+                        <p class="register-title">Create your account</p>
+                        <p class="register-subtitle">Join BlogApp and start sharing your stories</p>
                     </div>
 
-                    <!-- Email -->
-                    <div class="mb-3">
-                        <input type="email" 
-                               name="uemail" 
-                               class="form-control" 
-                               placeholder="Enter Email" 
-                               required>
-                    </div>
+                    <!-- Form -->
+                    <form method="post">
+                        {% csrf_token %}
 
-                    <!-- Password -->
-                    <div class="mb-3">
-                        <input type="password" 
-                               name="upassword" 
-                               class="form-control" 
-                               placeholder="Enter Password" 
-                               required>
-                    </div>
+                        <!-- Name -->
+                        <div class="mb-3">
+                            <label class="form-label-modern">Full Name</label>
+                            <input type="text"
+                                   name="uname"
+                                   class="form-control input-modern"
+                                   placeholder="Enter your name"
+                                   required>
+                        </div>
 
-                    <!-- Button -->
-                    <button type="submit" 
-                            class="btn btn-primary w-100">
-                        Sign Up
-                    </button>
+                        <!-- Email -->
+                        <div class="mb-3">
+                            <label class="form-label-modern">Email</label>
+                            <input type="email"
+                                   name="uemail"
+                                   class="form-control input-modern"
+                                   placeholder="Enter your email"
+                                   required>
+                        </div>
 
-                </form>
+                        <!-- Password -->
+                        <div class="mb-3">
+                            <label class="form-label-modern">Password</label>
+                            <input type="password"
+                                   name="upassword"
+                                   class="form-control input-modern"
+                                   placeholder="Create a password"
+                                   required>
+                        </div>
 
-                <!-- Login Link -->
-                <p class="text-center mt-3">
-                    Already have an account? 
-                    <a href="{% url 'login-page' %}">Login here</a>
-                </p>
+                        <!-- Button -->
+                        <button type="submit"
+                                class="btn btn-register w-100 mt-2">
+                            Sign Up
+                        </button>
 
+                    </form>
+
+                    <!-- Login Link -->
+                    <p class="text-center login-text mt-4 mb-0">
+                        Already have an account?
+                        <a href="{% url 'login-page' %}">Login here</a>
+                    </p>
+
+                </div>
             </div>
-        </div>
 
+        </div>
     </div>
 </div>
 

@@ -3,71 +3,122 @@
 
 {% block content %}
 
-<div class="container custom-container">
+<style>
+    .form-page-header {
+        margin-bottom: 24px;
+    }
 
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light w-100">
+    .form-page-title {
+        font-weight: 800;
+        color: var(--text-dark);
+        font-size: 1.8rem;
+        margin-bottom: 4px;
+    }
 
-        <a href="{% url 'home-page' %}">
-            <img class="w-25" src="{% static 'images/pho.png' %}" alt="logo">
-        </a>
+    .form-page-subtitle {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+    }
 
-        <button class="navbar-toggler" type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    .post-form-card {
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 32px 36px;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+    }
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    .form-label-modern {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text-dark);
+        margin-bottom: 6px;
+    }
 
-            <ul class="navbar-nav me-auto"></ul>
+    .input-modern {
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 11px 14px;
+        font-size: 0.95rem;
+        transition: all 0.2s ease;
+    }
 
-            <div class="dropdown">
-                <button class="btn btn-outline-primary dropdown-toggle"
-                    type="button" data-bs-toggle="dropdown">
-                    Profile
-                </button>
+    .input-modern:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px var(--primary-light);
+    }
 
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="{% url 'new-post' %}">New Post</a>
-                    <a class="dropdown-item" href="{% url 'my-post' %}">My Posts</a>
-                    <a class="dropdown-item" href="{% url 'logout' %}">Sign Out</a>
-                </div>
-            </div>
+    textarea.input-modern {
+        resize: vertical;
+    }
 
-        </div>
-    </nav>
+    .btn-submit {
+        background: var(--primary);
+        border: none;
+        color: #fff;
+        font-weight: 600;
+        border-radius: 10px;
+        padding: 10px 28px;
+        font-size: 0.95rem;
+        transition: all 0.2s ease;
+    }
 
-    <!-- Form -->
+    .btn-submit:hover {
+        background: var(--primary-dark);
+        color: #fff;
+    }
+
+    .btn-cancel {
+        border: 1px solid var(--border);
+        color: var(--text-dark);
+        font-weight: 500;
+        border-radius: 10px;
+        padding: 10px 24px;
+        font-size: 0.95rem;
+        background: #fff;
+        transition: all 0.2s ease;
+    }
+
+    .btn-cancel:hover {
+        background: var(--bg-soft);
+        color: var(--text-dark);
+    }
+</style>
+
+<div class="form-page-header">
+    <p class="form-page-title">Make a New Post</p>
+    <p class="form-page-subtitle">Share your thoughts with the community</p>
+</div>
+
+<div class="post-form-card" style="max-width: 800px;">
+
     <form method="post">
         {% csrf_token %}
 
-        <div class="container" style="max-width: 800px;">
-            <br><br>
-
-            <h1 class="fw-bold">Make a New Post</h1>
-            <hr>
-
-            <!-- Title -->
-            <div class="mb-3">
-                <label class="form-label"><b>Title</b></label>
-                <input type="text" class="form-control"
-                    name="title" required>
-            </div>
-
-            <!-- Content -->
-            <div class="mb-3">
-                <label class="form-label"><b>Content</b></label>
-                <textarea class="form-control"
-                    rows="6" name="content" required></textarea>
-            </div>
-
-            <!-- Button -->
-            <button class="btn btn-primary" type="submit">
-                Submit
-            </button>
-
+        <!-- Title -->
+        <div class="mb-3">
+            <label class="form-label-modern">Title</label>
+            <input type="text" class="form-control input-modern"
+                name="title" placeholder="Give your post a title" required>
         </div>
+
+        <!-- Content -->
+        <div class="mb-4">
+            <label class="form-label-modern">Content</label>
+            <textarea class="form-control input-modern"
+                rows="6" name="content" placeholder="Write your post here..." required></textarea>
+        </div>
+
+        <!-- Buttons -->
+        <div class="d-flex gap-2">
+            <button class="btn btn-submit" type="submit">
+                Publish Post
+            </button>
+            <a href="{% url 'home-page' %}" class="btn btn-cancel">
+                Cancel
+            </a>
+        </div>
+
     </form>
 
 </div>

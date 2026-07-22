@@ -104,3 +104,22 @@ def delete_post(request, id):
         post.delete()
         messages.success(request, "Deleted successfully")
         return redirect('home-page')
+    
+# ✅ EDIT POST
+@login_required(login_url='login-page')
+def edit_post(request, id):
+    post = get_object_or_404(Posts, id=id)
+
+    if post.author != request.user:
+        messages.error(request, "Not allowed")
+        return redirect('home-page')
+
+    if request.method == 'POST':
+        post.title = request.POST.get('title')
+        post.content = request.POST.get('content')
+        post.save()
+
+        messages.success(request, "Post updated successfully")
+        return redirect('my-post')
+
+    return render(request, 'blog/editpost.html', {'post': post})
