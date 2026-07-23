@@ -38,18 +38,21 @@ def loginn(request):
         name = request.POST.get('uname')
         password = request.POST.get('upassword')
 
+        print("Username:", repr(name))
+        print("Password:", repr(password))
+
         user = authenticate(request, username=name, password=password)
+
+        print("Authenticated User:", user)
 
         if user is not None:
             login(request, user)
-            messages.success(request, "Login successful")
             return redirect('home-page')
         else:
             messages.error(request, "Invalid username or password")
             return redirect('login-page')
 
     return render(request, 'blog/login.html')
-
 
 # ✅ HOME
 @login_required(login_url='login-page')
